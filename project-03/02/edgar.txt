@@ -1,0 +1,3 @@
+Trajanje upita: 0.045 sekunda
+
+db.getCollection('watches').distinct("score")

@@ -1,0 +1,3 @@
+Trajanje upita: 0.039 sekunda
+
+db.getCollection('watches').find({ price: { $eq: null } }).count()

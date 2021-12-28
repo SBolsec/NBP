@@ -1,0 +1,35 @@
+- kako se zove
+	=> baza podataka se zove 'project', a kolekcija se zove 'watches'
+   
+- kojeg formata su zapisi (stavite primjer jednog zapisa)
+{
+   "_id" : ObjectId("61ca1ec670035e8347adf63f"),
+   "product_id" : "B0007OEQZ4",
+   "title" : "Citizen Women's EG2270-55E Eco-Drive Watch",
+   "price" : null,
+   "user_id" : "A4PRRMBTW33MA",
+   "profile_name" : "Wood Nymph \"Paula\"",
+   "helpfulness" : "0/0",
+   "score" : 4,
+   "time" : ISODate("2008-01-07T00:00:00Z"),
+   "summary" : "Very Nice Watch for exceptional price",
+   "text" : "Purchased this watch to wear to a semi-formal party to coordinate with my white gold and diamond accessories. Perfect blend. I love all of the Eco-Drive watches becauses they recharge. I normally wear an 8 inch bracelet and this watch was a perfect fit. I would have preferred a wider watch, but this gives a very dainty look, especially nice for semi-formal wear. Great Price! Arrived on time."
+}
+   
+- koliko ima zapisa u kolekciji
+	=> 68357
+
+- kolika je prosječna veličina zapisa
+	=> 726 B
+
+- koliko su veliki ukupni podataci (kolekcija)
+	=> 49651294 B
+   
+- koliko na disku zauzimaju
+	=> 28155904 B
+
+ovi podaci su dobiveni upitom: db.watches.stats(), gdje su očitane vrijednosti za size, count, avgObjSize, storageSize
+
+Zadnje dvije vrijednosti nisu iste jer prva vrijednost predstavlja nekomprimiranu veličinu 
+svih dokumenata u kolekciji dok druga vrijdnost predstavlja koliko mjesta komprimirani 
+dokumenti zaista zauzimaju mjesta na disku.

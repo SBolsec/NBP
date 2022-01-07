@@ -1,2 +1,2 @@
-Trajanje upita:  sekunda
+// Trajanje upita:  sekunda
 

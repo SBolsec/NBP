@@ -1,54 +1,33 @@
-// Trajanje upita sa regexom: 0.136 sekunda
-// Trajanje upita sa indexom:  sekunda
+// Trajanje upita sa regexom: 0.194 sekunda
+// Trajanje upita sa indexom: 0.009 sekunda
 
 // Upit sa regexom
-db.watches()
-
-db.products.aggregate([{
-    $match: {
-        $or: [
-            { "reviews": { $elemMatch: { "title": { $regex: "mindful" } } } },
-            { "reviews": { $elemMatch: { "summary": { $regex: "mindful" } } } },
-            { "reviews": { $elemMatch: { "text": { $regex: "mindful" } } } },
-        ]
-    }
-},{ $project: {
-        reviews: { 
-            $filter: {
-                input: "$reviews",
-                cond: { 
-                    $or: [
-                        { $regexMatch: { input: "$$this.summary", regex: "mindful" } },
-                        { $regexMatch: { input: "$$this.text", regex: "mindful" } }
-                    ]
-                }
-            }
-        }
-    }
-}
-]);
+db.watches.find({$or: [
+    { "summary": { $regex: "mindful" } },
+    { "text": { $regex: "mindful" } } ,
+]});
 
 
 // Kreiranje indeksa
-// Trajanje upita: 4.07 sekunda
-db.products.createIndex({ "reviews.summary": "text", "reviews.text": "text" });
+// Trajanje upita: 6.04 sekunda
+db.watches.createIndex({ "summary": "text", "text": "text" });
 
 
 // Upit sa indeksom
-db.products.aggregate([{
-    $unwind: "reviews"
-},
-{
-    $match: { $text: { $search: "wonderful" } }
-},{ $project: {
-        reviews: { 
-            $filter: {
-                input: "$reviews",
-                cond: { 
-                    $text: { $search: "wonderful" } 
-                }
-            }
-        }
-    }
-}
-]);
+db.watches.find({ $text: { $search: "mindful" } });
+
+
+/*
+mind, minded
+
+Dohvat s indeksom je znatno brzi nego dohvat koristenjem regexa.
+Kod pretrazivanja sa regexom koristi se strategija COLLSCAN gdje se slijedno pretrazuje po cijeloj
+kolekciji te se provjerava uvjet u regexu, kod pretrazivanja nakon izgradnje indeksa koristi se 
+strategija IXSCAN gdje se koristi izgradeni indeks za ubrzanje pretrage.
+
+Kod pretrage koristenjem indeksa pronalazi se vise rezultata koji zadovoljavaju uvijet iako je u
+oba slucaja stavljen string "mindful". To je zato sto se kod pretrage koristenjem $text operatora
+i indeksa micu stop rijeci i koristi se korijenski oblik rijeci. Tako se kod ovog primjera u rezultatu
+mogu pronaci recenzije koje u sebi sadrze rijeci "mind", "minded", itd. koje imaju isti korijen kao
+i trazena rijec "mindful".
+*/

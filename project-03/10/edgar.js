@@ -18,8 +18,6 @@ db.watches.find({ $text: { $search: "mindful" } });
 
 
 /*
-mind, minded
-
 Dohvat s indeksom je znatno brzi nego dohvat koristenjem regexa.
 Kod pretrazivanja sa regexom koristi se strategija COLLSCAN gdje se slijedno pretrazuje po cijeloj
 kolekciji te se provjerava uvjet u regexu, kod pretrazivanja nakon izgradnje indeksa koristi se 

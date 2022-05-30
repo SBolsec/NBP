@@ -1,0 +1,98 @@
+{
+  "_id": "5c0157c54209cc5e8478bfb5",
+  "rental_id": 6300,
+  "rental_date": "2017-10-25T15:36:00",
+  "film": {
+    "title": "Encino Elf",
+    "description": "A Astounding Drama of a Feminist And a Teacher who must Confront a Husband in A Baloon",
+    "release_year": 2006,
+    "language": "English",
+    "rental_duration": 6,
+    "rental_rate": 0.99,
+    "length": 143,
+    "replacement_cost": 9.99,
+    "rating": "G",
+    "special_features": ["Trailers", "Behind the Scenes"],
+    "actors": [
+      {
+        "actor_id": 11,
+        "first_name": "Zero",
+        "last_name": "Cage"
+      },
+      {
+        "actor_id": 21,
+        "first_name": "Kirsten",
+        "last_name": "Paltrow"
+      },
+      {
+        "actor_id": 83,
+        "first_name": "Ben",
+        "last_name": "Willis"
+      },
+      {
+        "actor_id": 84,
+        "first_name": "James",
+        "last_name": "Pitt"
+      },
+      {
+        "actor_id": 109,
+        "first_name": "Sylvester",
+        "last_name": "Dern"
+      },
+      {
+        "actor_id": 161,
+        "first_name": "Harvey",
+        "last_name": "Hope"
+      }
+    ],
+    "categories": [
+      {
+        "category_id": 10,
+        "name": "Games"
+      }
+    ]
+  },
+  "customer": {
+    "customer_id": 283,
+    "first_name": "Felicia",
+    "last_name": "Sutton",
+    "email": "felicia.sutton@sakilacustomer.org",
+    "address": {
+      "address_id": 288,
+      "address": "226 Halifax Street",
+      "district": "Xinxiang",
+      "city_id": 277,
+      "city": "Korla",
+      "country_id": 23,
+      "country": "China",
+      "postal_code": "58492",
+      "phone": "790651020929"
+    },
+    "activebool": true,
+    "active": 1
+  },
+  "return_date": null,
+  "staff": {
+    "staff_id": 60,
+    "first_name": "Phyllis",
+    "last_name": "Edwards",
+    "address": {
+      "address_id": 356,
+      "address": "1378 Beira Loop",
+      "district": "Krasnojarsk",
+      "city_id": 597,
+      "city": "Zeleznogorsk",
+      "country_id": 80,
+      "country": "Russian Federation",
+      "postal_code": "40792",
+      "phone": "840957664136"
+    },
+    "email": "Phyllis.Edwards@sakilastaff.com",
+    "active": true
+  },
+  "payment": {
+    "payment_id": 25325,
+    "amount": 1.99,
+    "payment_date": null
+  }
+}

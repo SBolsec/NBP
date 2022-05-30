@@ -1,0 +1,651 @@
+@prefix : <https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix family_advDB: <https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#> .
+@base <https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl> .
+
+<https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl> rdf:type owl:Ontology ;
+                                                                    owl:versionIRI <https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl/1.0.0> ;
+                                                                    rdfs:label "Family"^^xsd:string ;
+                                                                    owl:versionInfo """A simple example ontology for demonstrational purpose on the course Advenced Databases on FER. Ontology is based on similar ontology  http://smi-protege.stanford.edu/repos/protege/icat/tags/semtech-demo/owlapi-mt/apibinding/src/test/resources/primer.turtle.rdf .
+It uses a simple class hierarchy, with Gender and Person as the two subclasses of Thing; 
+   Subclasses of the Person: Child, Man, Parent, Relative , Sibling, Teenager, Woman
+   Subclasses of the Man: Brother, Father, Nephew, Sone, Uncle.
+   Subclasses of the Woman: Aunt, Daughter, Mother, Niece, Sister.
+Relations between persons are defined through equivalence classes: 
+\"Child EquivalentTo the union of Son and Dauther\".
+
+Object properties: hasAunt, hasBrother, hasChild, hasDaughter, hasFather, hasGender, hasMother, hasNephew, hasNiece, hasParent, hasSibling, 
+                   hasSister, hasSon, hasUncle
+Data properties:  hasAge,   firstName, Surname
+Data types:     personAge, toddlerAge
+Two individuals (instances) are defined for Gender (FemaleGender, MaleGender), and a few for Person. 
+The latter may have relationships with other people, specified via property assertions such as \"Dave hasChild Bob\"."""^^xsd:string ;
+                                                                    dc:title "Family -  Advanced Databases"@en ;
+                                                                    terms:contributor "FER - Department for Applied Computing" .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#personAge
+#:personAge rdf:type rdfs:Datatype ;
+#                      owl:equivalentClass [ rdf:type rdfs:Datatype ;
+#                                            owl:onDatatype xsd:nonNegativeInteger ;
+#                                            owl:withRestrictions ( [ xsd:minInclusive 0
+#                                                                   ]
+#                                                                   [ xsd:maxInclusive 150
+#                                                                   ]
+#                                                                 )
+#                                          ] .
+
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasBrother
+:hasBrother rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :hasSibling ;
+                       rdfs:domain :Person ;
+                       rdfs:range :Man .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasChild
+:hasChild rdf:type owl:ObjectProperty ;
+                     owl:inverseOf :hasParent ;
+                     rdfs:domain :Person ;
+                     rdfs:range :Person .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasDaughter
+:hasDaughter rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :hasChild ;
+                        rdfs:domain :Person ;
+                        rdfs:range :Woman .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasFather
+:hasFather rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :hasParent ;
+                      rdf:type owl:FunctionalProperty ;
+                      rdfs:domain :Person ;
+                      rdfs:range :Man .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasGender
+:hasGender rdf:type owl:ObjectProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain :Person ;
+                      rdfs:range :Gender .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasMother
+:hasMother rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :hasParent ;
+                      rdf:type owl:FunctionalProperty ;
+                      rdfs:domain :Person ;
+                      rdfs:range :Woman .
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasParent
+:hasParent rdf:type owl:ObjectProperty ,
+                               owl:IrreflexiveProperty ;
+                      rdfs:domain :Person ;
+                      rdfs:range :Person .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasSibling
+:hasSibling rdf:type owl:ObjectProperty ,
+                                owl:SymmetricProperty ,
+                                owl:IrreflexiveProperty ;
+                       rdfs:domain :Person ;
+                       rdfs:range :Person .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasSister
+:hasSister rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :hasSibling ;
+                      rdfs:domain :Person ;
+                      rdfs:range :Woman .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasSon
+:hasSon rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasChild ;
+                   rdfs:domain :Person ;
+                   rdfs:range :Man .
+
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#hasAge
+:hasAge rdf:type           owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type           owl:FunctionalProperty ;
+        rdfs:domain        :Person ;
+        rdfs:range         xsd:nonNegativeInteger.
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#firstName
+:firstName rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdf:type owl:FunctionalProperty ;
+                    rdfs:domain :Person ;
+                    rdfs:range xsd:string .
+
+   
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#suName
+:Surname rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdf:type owl:FunctionalProperty ;
+                     rdfs:domain :Person ;
+                     rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Brother
+:Brother rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( :Man
+                                                               :Sibling
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf :Man ;
+                    owl:disjointWith :Sister .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Child
+:Child rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( :Daughter
+                                                      :Son
+                                                    )
+                                      ] ;
+                  rdfs:subClassOf :Person .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Daughter
+:Daughter rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( :Woman
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty :hasParent ;
+                                                                  owl:someValuesFrom :Parent
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:subClassOf :Woman ;
+                     rdfs:subClassOf :Child ;
+                     owl:disjointWith :Son .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Father
+:Father rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :Man
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :hasChild ;
+                                                                owl:someValuesFrom :Person
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :Man ;
+                   rdfs:subClassOf :Parent ;
+                   owl:disjointWith :Mother .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Gender
+:Gender rdf:type owl:Class ;
+                   rdfs:subClassOf owl:Thing .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Man
+:Man rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :hasGender ;
+                                                             owl:hasValue :MaleGender
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf :Person ;
+                owl:disjointWith :Woman .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Mother
+:Mother rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :Woman
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty :hasChild ;
+                                                                owl:someValuesFrom :Person
+                                                              ]
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :Woman ;
+                   rdfs:subClassOf :Parent ;
+                   owl:disjointWith :Father .
+
+
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Parent
+:Parent rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:unionOf ( :Father
+                                                       :Mother
+                                                     )
+                                       ] ;
+                   rdfs:subClassOf :Person .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Person
+:Person rdf:type owl:Class .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Sibling
+:Sibling rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty :hasSibling ;
+                                                                 owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Sister
+:Sister rdf:type owl:Class ;
+                   owl:equivalentClass [ owl:intersectionOf ( :Sibling
+                                                              :Woman
+                                                            ) ;
+                                         rdf:type owl:Class
+                                       ] ;
+                   rdfs:subClassOf :Woman .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Son
+:Son rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( :Man
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :hasParent ;
+                                                             owl:someValuesFrom :Parent
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf :Child ;                                    
+                rdfs:subClassOf :Man .
+
+
+
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#Woman
+:Woman rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :hasGender ;
+                                                               owl:hasValue :FemaleGender
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf :Person .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#FemaleGender
+:FemaleGender rdf:type owl:NamedIndividual ,
+                                  owl:Thing ,
+                                  :Gender .
+
+
+###  https://www.fer.unizg.hr/predmet/nmbp/materijali/family_advDB.owl#MaleGender
+:MaleGender rdf:type owl:NamedIndividual ,
+                                owl:Thing ,
+                                :Gender .
+
+family_advDB:1 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Penelope"^^xsd:string ; 
+               :Surname      "Guiness"^^xsd:string .
+
+family_advDB:2 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Nick"^^xsd:string ; 
+               :Surname      "Wahlberg"^^xsd:string .
+
+family_advDB:3 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "15"^^xsd:nonNegativeInteger ; 
+               :firstName    "Jennifer"^^xsd:string ; 
+               :Surname      "Davis"^^xsd:string ;
+               :hasMother   family_advDB:1 ;
+               :hasFather   family_advDB:2 ;
+               :hasSibling family_advDB:4 .
+
+family_advDB:4 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "2"^^xsd:nonNegativeInteger ; 
+               :firstName    "Bette"^^xsd:string ; 
+               :Surname      "Nicholson"^^xsd:string ;
+               :hasMother   family_advDB:1 ;
+               :hasFather   family_advDB:2 .
+
+family_advDB:5 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Ed"^^xsd:string ; 
+               :Surname      "Chase"^^xsd:string .
+
+
+family_advDB:6 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "33"^^xsd:nonNegativeInteger ; 
+               :firstName    "Jenny"^^xsd:string ; 
+               :Surname      "Lollobrigida"^^xsd:string  .
+
+
+family_advDB:7 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "15"^^xsd:nonNegativeInteger ; 
+               :firstName    "Grace"^^xsd:string ; 
+               :Surname      "Mostel"^^xsd:string  .
+
+family_advDB:8 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "5"^^xsd:nonNegativeInteger ; 
+               :firstName    "Matthew"^^xsd:string ; 
+               :Surname      "Johansson"^^xsd:string .
+
+family_advDB:9 rdf:type      owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Joe"^^xsd:string ; 
+               :Surname      "Swank"^^xsd:string .
+
+family_advDB:10 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Christian"^^xsd:string ; 
+               :Surname      "Gable"^^xsd:string .
+
+family_advDB:11 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Zero"^^xsd:string ; 
+               :Surname      "Cage"^^xsd:string .
+
+family_advDB:12 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Karl"^^xsd:string ; 
+               :Surname      "Berry"^^xsd:string .
+
+family_advDB:13 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Uma"^^xsd:string ; 
+               :Surname      "Wood"^^xsd:string .
+
+family_advDB:14 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Vivien"^^xsd:string ; 
+               :Surname      "Bergen"^^xsd:string .
+
+family_advDB:16 rdf:type         owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Fred"^^xsd:string ; 
+               :Surname      "Costner"^^xsd:string .
+
+family_advDB:17 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Helen"^^xsd:string ; 
+               :Surname      "Voight"^^xsd:string .
+
+family_advDB:18 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Dan"^^xsd:string ; 
+               :Surname      "Torn"^^xsd:string .
+
+family_advDB:19 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :MaleGender ; 
+               :hasAge      "38"^^xsd:nonNegativeInteger ; 
+               :firstName    "Bob"^^xsd:string ; 
+               :Surname      "Fawcett"^^xsd:string .
+
+family_advDB:20 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Lucille"^^xsd:string ; 
+               :Surname      "Tracy"^^xsd:string .
+
+family_advDB:21 rdf:type     owl:NamedIndividual,
+                            :Person ; 
+               :hasGender   :FemaleGender ; 
+               :hasAge      "35"^^xsd:nonNegativeInteger ; 
+               :firstName    "Kirsten"^^xsd:string ;      
+               :Surname      "Paltrow"^^xsd:string .
+
+
+
+
+####################################################
+
+# 2.1
+
+:hasAunt  rdf:type      owl:ObjectProperty ;
+          rdfs:domain   :Person ;
+          rdfs:range    :Woman .
+
+:hasUncle rdf:type      owl:ObjectProperty ;
+          rdfs:domain   :Person ;
+          rdfs:range    :Man .
+
+:hasNiece rdf:type      owl:ObjectProperty ;
+          rdfs:domain   :Person ;
+          rdfs:range    :Woman .
+
+:hasNephew  rdf:type    owl:ObjectProperty ;
+          rdfs:domain   :Person ;
+          rdfs:range    :Man .
+
+# 2.2
+
+:Niece    rdf:type      owl:Class ;
+          owl:equivalentClass [owl:intersectionOf(:Woman 
+                                                    [
+                                                      rdf:type    owl:Class ;
+                                                      owl:unionOf (
+                                                        [
+                                                          rdf:type owl:Restriction;
+                                                          owl:onProperty :hasAunt;
+                                                          owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                                        ]
+                                                        [
+                                                          rdf:type owl:Restriction
+                                                          owl:onProperty :hasUncle
+                                                          owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                                        ]
+                                                      )
+                                                    ]
+                                                  ) ;
+                                                  rdf:type owl:Class
+                                                  ] .
+
+# 2.3.
+
+:Nephew   rdf:type  owl:Class ;
+          owl:equivalentClass [
+            owl:intersectionOf(
+              :Man
+              [ rdf:type owl:Class;
+                owl:unionOf (
+                  [
+                    rdf:type owl:Restriction
+                    owl:onProperty :hasAunt
+                    owl:minCardinality "1"^^xsd:nonNegativeInteger
+                  ]
+                  [
+                    rdf:type owl:Restriction
+                    owl:onProperty :hasUncle
+                    owl:minCardinality "1"^^xsd:nonNegativeInteger
+                  ]
+                )
+              ]
+            ) ;
+            rdf:type owl:Class
+          ] .
+
+
+:Aunt   rdf:type  owl:Class ;
+        owl:equivalentClass [
+          owl:intersectionOf (
+            :Woman
+            [ rdf:type owl:Class
+              owl:unionOf(
+                [rdf:type owl:Restriction ;
+                  owl:onProperty :hasNiece ;
+                  owl:minCardinality "1"^^xsd:nonNegativeInteger
+                ]
+                [rdf:type owl:Restriction ;
+                  owl:onProperty :hasNephew ;
+                  owl:minCardinality "1"^^xsd:nonNegativeInteger
+                ]
+              )
+            ]
+          ) ;
+          rdf:type owl:Class
+        ] .
+
+# 2.4.
+
+:Relative   rdf:type  owl:Class ;
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:intersectionOf( :Aunt
+                                                  :Child 
+                                                  :Nephew 
+                                                  :Niece 
+                                                  :Parent 
+                                                  :Sibling 
+                                                  :Uncle
+                                                )
+                            ] ;
+        rdfs:subClassOf :Person .
+
+# 2.5.
+
+:Niece  rdfs:subClassOf :Relative;
+:Nephew rdfs:subClassOf :Relative;
+:Aunt   rdfs:subClassOf :Relative;
+:Uncle  rdfs:subClassOf :Relative;
+
+# 2.6.
+
+:Teenager   rdf:type owl:Class ;
+            rdfs:subClassOf :Person ;
+            owl:equivalentClass [
+              rdf:type owl:Class ;
+              owl:intersectionOf(
+                :Person
+                [
+                  rdf:type owl:Restriction ;
+                  owl:onProperty :hasAge
+                  owl:someValuesFrom [
+                    rdf:type rdfs:Datatype ;
+                    owl:onDatatype  xsd:nonNegativeInteger ;
+                    owl:withRestrictions (
+                      [ xsd:minInclusive 13 ]
+                      [ xsd:maxInclusive 19 ]
+                    )
+                  ]  
+                ]
+              )
+            ] .
+
+
+####
+
+# Ispišite ime i prezime osobe, te ime i prezime majke odnosno oca za osobe
+# za koje su evidentirani podaci o ocu odnosno majci.
+
+
+SELECT ?firstName, ?Surname, ?MFirstName, ?MSurname, ?FFirstName, ?FSurname
+
+WHERE {
+  ?personURI  rdf:type    :Person ;
+              :firstName  ?firstName ;
+              :Surname    ?Surname ;
+              :hasMother  ?motherURI ;
+              :hasFather  ?fatherURI .
+  ?motherURI  rdf:type    :Person ;
+              :firstName  ?MFirstName ;
+              :Surname    ?MSurname .
+  ?fatherURI  rdf:type    :Person ;
+              :firstName  ?FFirstName ;
+              :Surname    ?FSurname .
+}
+
+# Ispišite ime i prezime osobe koja nije evidentirana kao roditelj 
+# (niti otac niti majka) nijednoj drugoj osobi.
+
+SELECT  ?firstName ?surname
+
+WHERE {
+  ?personURI  rdf:type    :Person ;
+              :firstName  ?firstName ;
+              :Surname    ?surname .
+
+  FILTER NOT EXISTS { ?personURI :hasChild ?childURI } .
+}
+
+# Ispišite ime i prezime osoba koji su nečija djeca.
+
+SELECT
+
+WHERE {
+
+}
